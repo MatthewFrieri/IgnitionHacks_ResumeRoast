@@ -1,12 +1,13 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
 
 export default function Roast() {
   const location = useLocation();
+  const navigate = useNavigate();
   const resumeText = location.state?.resumeText;
-  const [lyrics, setLyrics] = useState("...");
+  const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
   const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
 
@@ -21,27 +22,58 @@ export default function Roast() {
     }
   }, [resumeText]);
 
-
   useEffect(() => {
     if (lyrics) {
       console.log(lyrics);
+
       // getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
 
-  useEffect(() => {
-    if (dissAudio) {
-      dissAudio.play();
-
-
-      
-    }
-  }, [dissAudio]);
+  const playAudio = () => {
+    dissAudio.play();
+  };
 
   return (
-    <div>
-      <h1>roast page</h1>
-      <p>{lyrics}</p>
+    <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
+      <span className="flex gap-10 p-10">
+        <i
+          className="text-5xl text-white cursor-pointer fa-house fa-solid"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <i
+          className="text-5xl text-white cursor-pointer fa-download fa-solid"
+          onClick={() => {}}
+        />
+      </span>
+      <img
+        src="outlined-drake.png"
+        className="bottom-12 left-20 absolute scale-125"
+      />
+      <div className="top-20 right-40 absolute">
+        <div className="flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
+          {lyrics ? (
+            <p>{lyrics}</p>
+          ) : (
+            <div className="border-4 border-t-transparent border-blue-500 border-solid rounded-full w-12 h-12 animate-spin b"></div>
+          )}
+        </div>
+      </div>
+      {!dissAudio && (
+        <div className="bottom-10 left-[25rem] absolute flex justify-center items-center border-4 bg-white border-blue-500 rounded-full w-16 h-16">
+          <i class="text-4xl text-blue-500 fa-play fa-solid"></i>
+        </div>
+      )}
+      <p
+        onClick={() => {
+          navigate("/feedback");
+        }}
+        className="right-10 bottom-10 absolute text-3xl text-white cursor-pointer"
+      >
+        Get help →
+      </p>
     </div>
   );
 }
