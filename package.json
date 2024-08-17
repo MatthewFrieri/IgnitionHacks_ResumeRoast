@@ -12,6 +12,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.17.0",
     "axios": "^1.7.4",
+    "crunker": "^2.4.0",
     "elevenlabs": "^0.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

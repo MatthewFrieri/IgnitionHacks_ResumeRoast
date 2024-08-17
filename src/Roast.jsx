@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
+import Crunker from "crunker";
 
 export default function Roast() {
   const location = useLocation();
@@ -10,6 +11,7 @@ export default function Roast() {
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
   const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
+  let crunker = new Crunker({ sampleRate: 48000 });
 
   useEffect(() => {
     if (resumeText !== undefined) {
@@ -26,13 +28,63 @@ export default function Roast() {
     if (lyrics) {
       console.log(lyrics);
 
-      // getAudio(lyrics, drakeVoiceID, setDissAudio);
+
+      async function audioElementToAudioBuffer(audioElement) {
+        const audioContext = new (window.AudioContext ||
+          window.webkitAudioContext)();
+
+        // Fetch the audio data
+        const response = await fetch(audioElement.src);
+        const arrayBuffer = await response.arrayBuffer();
+
+        // Decode the audio data into an AudioBuffer
+        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+
+        return audioBuffer;
+      }
+
+      const drakeRoast = new Audio("DrakeRoast.mp3");
+      const bblDrizzy = new Audio("BBLDrizzy.mp3");
+
+      async function buildAudio(voice, track) {
+        const voiceAudio = await audioElementToAudioBuffer(voice);
+        const trackBuffer = await audioElementToAudioBuffer(track);
+        const voiceBuffer = crunker.padAudio(voiceAudio, 0, 6.3);
+        const merged = crunker.mergeAudio([trackBuffer, voiceBuffer]);
+        const cut = crunker.sliceAudio(
+          merged,
+          0,
+          voiceBuffer.duration + 5,
+          7,
+          5
+        );
+        console.log(merged);
+        const output = crunker.export(cut, "audio/mp3");
+        //crunker.download(output.blob);
+        document.body.append(output.element);
+
+        crunker.notSupported(() => {
+          // Handle no browser support
+        });
+      }
+
+      buildAudio(drakeRoast, bblDrizzy);
+      // Usage
+      // audioElementToAudioBuffer(drakeRoast).then((audioBuffer) => {
+      //   return audioBuffer; // Now you have your AudioBuffer
+      // });
+      //getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
 
   const playAudio = () => {
     dissAudio.play();
   };
+  useEffect(() => {
+    if (dissAudio) {
+      //dissAudio.play();
+    }
+  }, [dissAudio]);
 
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
