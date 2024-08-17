@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function getAudio(text, voiceId) {
+export async function getAudio(text, voiceId, setAudio) {
   const response = await axios.post(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
     { text },
@@ -14,5 +14,5 @@ export async function getAudio(text, voiceId) {
   );
 
   const audio = new Audio(URL.createObjectURL(response.data));
-  return audio;
+  setAudio(audio)
 }

@@ -7,20 +7,36 @@ export default function Roast() {
   const location = useLocation();
   const resumeText = location.state?.resumeText;
   const [lyrics, setLyrics] = useState("...");
+  const [dissAudio, setDissAudio] = useState();
+  const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
 
   useEffect(() => {
     if (resumeText !== undefined) {
-      console.log("prompting gemini");
-
       const prompt = `I want you to write a diss track for my resume as Drake. 
         Make it clear Drake is dissing my resume. Targetting specific pieces of 
         information from it (or information missing). Dont comment on any bad formatting 
         or random characters. Write 4 verses of 4 lines each. ${resumeText}`;
 
-      console.log(resumeText);
       promptGemini(prompt, setLyrics);
     }
   }, [resumeText]);
+
+
+  useEffect(() => {
+    if (lyrics) {
+      console.log(lyrics);
+      // getAudio(lyrics, drakeVoiceID, setDissAudio);
+    }
+  }, [lyrics]);
+
+  useEffect(() => {
+    if (dissAudio) {
+      dissAudio.play();
+
+
+      
+    }
+  }, [dissAudio]);
 
   return (
     <div>
