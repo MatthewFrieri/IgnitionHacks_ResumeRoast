@@ -26,12 +26,15 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen">
-      <h1 className="text-4xl">Resume Roaster</h1>
-      <input type="file" onChange={onFileChange} className="my-20" />
-      <button onClick={onFileSubmit} className="bg-white w-20 h-10">
-        Roast Me
-      </button>
+    <div className="relative -z-20 flex flex-col justify-center items-center bg-gradient-to-b from-zinc-800 to-zinc-900 w-screen h-screen overflow-hidden">
+      <div className="-z-10 absolute border-x-[500px] border-x-transparent border-yellow-100 border-b-[3000px] -rotate-[60deg]"></div>
+      <div className="top-20 left-10 absolute border-2 border-red-500">
+        <h1 className="text-4xl">Resume Roaster</h1>
+        <input type="file" onChange={onFileChange} className="my-20" />
+        <button onClick={onFileSubmit} className="bg-white w-20 h-10">
+          Roast Me
+        </button>
+      </div>
     </div>
   );
 }
