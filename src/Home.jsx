@@ -18,7 +18,7 @@ export default function Home() {
       try {
         pdfToText(file)
           .then((text) => {
-            navigate("/roast", { state: { resumeText: text } });
+            navigate("/roast", { state: { resumeText: text , pdf: file} });
           })
 
           .catch((error) => console.error("Failed to extract text from pdf"));

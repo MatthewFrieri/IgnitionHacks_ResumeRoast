@@ -14,14 +14,12 @@ export async function getAudio(text, voiceId, setDissAudio, setDownloadableOutpu
   //   }
   // );
   
-  // const drakeAudio = new Audio(URL.createObjectURL(response.data));
-  const drakeAudio = new Audio('DrakeRoast.mp3')
+  const drakeAudio = new Audio(URL.createObjectURL(response.data));
+  // const drakeAudio = new Audio('DrakeRoast.mp3')
   const bblDrizzy = new Audio('BBLDrizzy.mp3')
 
-  const output = await buildAudio(drakeAudio, bblDrizzy)
-  const finalAudio = output.element
+  const finalAudio = await buildAudio(drakeAudio, bblDrizzy)
   setDissAudio(finalAudio)
-  setDownloadableOutput(output)
 }
 
 
@@ -56,12 +54,7 @@ async function buildAudio(voice, track) {
     7,
     5
   );
-  console.log(merged);
-  const output = crunker.export(cut, "audio/mp3");
 
-  console.log('OUTPUT');
-  console.log(output);
-  
-  // crunker.download(output.blob, 'dissed_resume')
-  return output
+  const output = crunker.export(cut, "audio/mp3");
+  return output.element
 }

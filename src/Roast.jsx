@@ -8,9 +8,9 @@ export default function Roast() {
   const location = useLocation();
   const navigate = useNavigate();
   const resumeText = location.state?.resumeText;
+  const file = location.state?.pdf;
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
-  const [downloadableOutput, setDownloadableOutput] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
@@ -28,7 +28,7 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
-      getAudio(lyrics, drakeVoiceID, setDissAudio, setDownloadableOutput);
+      getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
 
@@ -47,9 +47,14 @@ export default function Roast() {
   };
 
   const downloadAudio = () => {
-    // Create a link element for downloading
-    const crunker = new Crunker();
-    crunker.download(downloadableOutput.blob, "dissed_resume");
+    const link = document.createElement("a");
+
+    link.download = "dissed_resume.mp3";
+    link.href = dissAudio.src;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -97,7 +102,7 @@ export default function Roast() {
 
       <p
         onClick={() => {
-          navigate("/feedback");
+          navigate("/feedback" , {state : {pdf : file}});
         }}
         className="right-10 bottom-10 absolute text-3xl text-white cursor-pointer"
       >
