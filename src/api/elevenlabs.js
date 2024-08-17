@@ -19,7 +19,6 @@ export async function getAudio(text, voiceId, setDissAudio) {
   const bblDrizzy = new Audio('BBLDrizzy.mp3')
 
   const finalAudio = await buildAudio(drakeAudio, bblDrizzy)
-
   setDissAudio(finalAudio)
 }
 
@@ -55,12 +54,7 @@ async function buildAudio(voice, track) {
     7,
     5
   );
-  console.log(merged);
-  const output = crunker.export(cut, "audio/mp3");
-  //crunker.download(output.blob);
 
-  console.log('OUTPUT');
-  console.log(output);
-  
+  const output = crunker.export(cut, "audio/mp3");
   return output.element
 }

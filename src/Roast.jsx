@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
+import Crunker from "crunker";
 
 export default function Roast() {
   const location = useLocation();
@@ -45,6 +46,17 @@ export default function Roast() {
     setIsPlaying(true);
   };
 
+  const downloadAudio = () => {
+    const link = document.createElement("a");
+
+    link.download = "dissed_resume.mp3";
+    link.href = dissAudio.src;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
       <span className="flex gap-10 p-10">
@@ -57,7 +69,7 @@ export default function Roast() {
         {dissAudio && (
           <i
             className="text-5xl text-white cursor-pointer fa-download fa-solid"
-            onClick={() => {}}
+            onClick={downloadAudio}
           />
         )}
       </span>
