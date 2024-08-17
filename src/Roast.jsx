@@ -9,6 +9,8 @@ export default function Roast() {
   const resumeText = location.state?.resumeText;
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
 
   useEffect(() => {
@@ -24,10 +26,23 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
-      console.log(lyrics);
       getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
+
+  useEffect(() => {
+    if (dissAudio) {
+      dissAudio.addEventListener("ended", () => {
+        setIsPlaying(false);
+      });
+    }
+  }, [dissAudio]);
+
+  const playAudio = () => {
+    dissAudio.play();
+    setHasPlayedOnce(true);
+    setIsPlaying(true);
+  };
 
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
@@ -38,34 +53,40 @@ export default function Roast() {
             navigate("/");
           }}
         />
-        <i
-          className="text-5xl text-white cursor-pointer fa-download fa-solid"
-          onClick={() => {}}
-        />
+        {dissAudio && (
+          <i
+            className="text-5xl text-white cursor-pointer fa-download fa-solid"
+            onClick={() => {}}
+          />
+        )}
       </span>
       <img
         src="outlined-drake.png"
         className="bottom-12 left-20 absolute scale-125"
       />
       <div className="top-20 right-40 absolute">
-        <div className="flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
-          {lyrics ? (
-            <p>{lyrics}</p>
+        <div className="relative flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
+          {dissAudio ? (
+            hasPlayedOnce ? (
+              <p className="font-roboto">{lyrics}</p>
+            ) : (
+              <i
+                onClick={playAudio}
+                className="text-8xl text-white fa-play fa-solid"
+              ></i>
+            )
           ) : (
             <div className="border-4 border-t-transparent border-blue-500 border-solid rounded-full w-12 h-12 animate-spin b"></div>
           )}
+          {!isPlaying && hasPlayedOnce && (
+            <i
+              onClick={playAudio}
+              className="fa-rotate-right right-8 bottom-8 absolute text-4xl text-white fa-solid"
+            ></i>
+          )}
         </div>
       </div>
-      {dissAudio && (
-        <div
-          onClick={() => {
-            dissAudio.play();
-          }}
-          className="bottom-10 left-[25rem] absolute flex justify-center items-center border-4 bg-white border-blue-500 rounded-full w-16 h-16"
-        >
-          <i className="text-4xl text-blue-500 fa-play fa-solid"></i>
-        </div>
-      )}
+
       <p
         onClick={() => {
           navigate("/feedback");
