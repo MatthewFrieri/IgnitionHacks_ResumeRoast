@@ -34,7 +34,7 @@ export default function Home() {
           <h1 className="text-3xl text-left text-gray-200 ml-2 mt-5">This is a cool line or something!</h1>
         </div>
         <div className="flex flex-row items-center gap-8">
-          <label for="fileInput" class="customFileInput">
+          <label htmlFor="fileInput" className="customFileInput">
             <span>{file ? <p>{file.name}</p> : <p>Select File</p>}</span>
             </label>
           <input type="file" id="fileInput" onChange={onFileChange} className="">
