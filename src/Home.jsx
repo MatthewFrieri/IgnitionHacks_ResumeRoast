@@ -8,7 +8,16 @@ export default function Home() {
 
   const onFileSubmit = () => {
     if (file) {
-      navigate("/roast", { state: { resumeAsText: "temporary resume" } });
+      try {
+        pdfToText(file)
+          .then((text) => {
+            navigate("/roast", { state: { resumeAsText: text } });
+          })
+
+          .catch((error) => console.error("Failed to extract text from pdf"));
+      } catch (error) {
+        console.error("Error extracting text from PDF:", error);
+      }
     }
   };
 
@@ -17,7 +26,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center bg-zinc-700 w-screen h-screen">
+    <div className="flex flex-col justify-center items-center bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen">
       <h1 className="text-4xl">Resume Roaster</h1>
       <input type="file" onChange={onFileChange} className="my-20" />
       <button onClick={onFileSubmit} className="bg-white w-20 h-10">
