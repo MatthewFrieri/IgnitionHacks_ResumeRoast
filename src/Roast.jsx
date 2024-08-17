@@ -7,6 +7,7 @@ export default function Roast() {
   const location = useLocation();
   const navigate = useNavigate();
   const resumeText = location.state?.resumeText;
+  const file = location.state?.pdf;
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -89,7 +90,7 @@ export default function Roast() {
 
       <p
         onClick={() => {
-          navigate("/feedback");
+          navigate("/feedback" , {state : {pdf : file}});
         }}
         className="right-10 bottom-10 absolute text-3xl text-white cursor-pointer"
       >
