@@ -31,11 +31,11 @@ export default function Home() {
       <div className="absolute right-1 border-x-[400px] border-x-transparent border-yellow-100 border-b-[3000px] -rotate-[20deg]"></div>
       <div className="flex flex-col gap-8 top-[100px] left-[150px] z-10 absolute">
         <div>
-          <h1 className="text-[150px] text-left text-gray-200 leading-[150px]">
+          <h1 className="text-[150px] text-left text-gray-200 leading-[150px] font-bold bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent">
             Resume <br /> Roast
           </h1>
           <h1 className="text-3xl text-left text-gray-200 ml-2 mt-5">
-            This is a cool line or something!
+            Have your favourite rappers critique your resume.
           </h1>
         </div>
         <div className="flex flex-row items-center gap-8">
@@ -48,11 +48,8 @@ export default function Home() {
             onChange={onFileChange}
             className=""
           ></input>
-          <button
-            onClick={onFileSubmit}
-            className="text-4xl w-[300px] h-[90px] border-2 border-blue-500 rounded-[4px] text-white text-[48px]"
-          >
-            Roast Me
+          <button onClick={onFileSubmit} className="text-4xl w-[300px] h-[90px] border-2 border-gray-600 rounded-[4px] text-white text-[48px] hover:border-4 font-bold">
+            Roast Me <i className="fa-solid fa-fire-flame-curved bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent"></i>
           </button>
         </div>
       </div>
