@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
+import Crunker from "crunker";
 
 export default function Roast() {
   const location = useLocation();
@@ -9,6 +10,7 @@ export default function Roast() {
   const resumeText = location.state?.resumeText;
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
+  const [downloadableOutput, setDownloadableOutput] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
@@ -26,7 +28,7 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
-      getAudio(lyrics, drakeVoiceID, setDissAudio);
+      getAudio(lyrics, drakeVoiceID, setDissAudio, setDownloadableOutput);
     }
   }, [lyrics]);
 
@@ -44,6 +46,12 @@ export default function Roast() {
     setIsPlaying(true);
   };
 
+  const downloadAudio = () => {
+    // Create a link element for downloading
+    const crunker = new Crunker();
+    crunker.download(downloadableOutput.blob, "dissed_resume");
+  };
+
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
       <span className="flex gap-10 p-10">
@@ -56,7 +64,7 @@ export default function Roast() {
         {dissAudio && (
           <i
             className="text-5xl text-white cursor-pointer fa-download fa-solid"
-            onClick={() => {}}
+            onClick={downloadAudio}
           />
         )}
       </span>

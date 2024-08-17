@@ -1,7 +1,7 @@
 import axios from "axios";
 import Crunker from "crunker";
 
-export async function getAudio(text, voiceId, setDissAudio) {
+export async function getAudio(text, voiceId, setDissAudio, setDownloadableOutput) {
   const response = await axios.post(
     `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
     { text: "e" },
@@ -18,9 +18,10 @@ export async function getAudio(text, voiceId, setDissAudio) {
   // const drakeAudio = new Audio('DrakeRoast.mp3')
   const bblDrizzy = new Audio('BBLDrizzy.mp3')
 
-  const finalAudio = await buildAudio(drakeAudio, bblDrizzy)
-
+  const output = await buildAudio(drakeAudio, bblDrizzy)
+  const finalAudio = output.element
   setDissAudio(finalAudio)
+  setDownloadableOutput(output)
 }
 
 
@@ -57,10 +58,10 @@ async function buildAudio(voice, track) {
   );
   console.log(merged);
   const output = crunker.export(cut, "audio/mp3");
-  //crunker.download(output.blob);
 
   console.log('OUTPUT');
   console.log(output);
   
-  return output.element
+  // crunker.download(output.blob, 'dissed_resume')
+  return output
 }
