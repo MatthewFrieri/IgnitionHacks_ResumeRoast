@@ -10,7 +10,6 @@ export default function Roast() {
   const resumeText = location.state?.resumeText;
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
-  const [downloadableOutput, setDownloadableOutput] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
   const drakeVoiceID = "9VZnLb0qx35CBHf8XXqS";
@@ -28,7 +27,7 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
-      getAudio(lyrics, drakeVoiceID, setDissAudio, setDownloadableOutput);
+      getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
 
@@ -47,9 +46,14 @@ export default function Roast() {
   };
 
   const downloadAudio = () => {
-    // Create a link element for downloading
-    const crunker = new Crunker();
-    crunker.download(downloadableOutput.blob, "dissed_resume");
+    const link = document.createElement("a");
+
+    link.download = "dissed_resume.mp3";
+    link.href = dissAudio.src;
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
