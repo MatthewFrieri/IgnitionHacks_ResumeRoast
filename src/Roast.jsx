@@ -17,9 +17,9 @@ export default function Roast() {
   useEffect(() => {
     if (resumeText !== undefined) {
       const prompt = `I want you to write a diss track for my resume as Drake. 
-        Make it clear Drake is dissing my resume. Targetting specific pieces of 
-        information from it (or information missing). Dont comment on any bad formatting 
-        or random characters. Write 4 verses of 4 lines each. ${resumeText}`;
+      Make it clear Drake is dissing my resume. Targetting specific pieces of 
+      information from it (or information missing). Dont comment on any bad formatting 
+      or random characters. Write 4 verses of 4 lines each. ${resumeText}`;
 
       promptGemini(prompt, setLyrics);
     }
@@ -27,7 +27,7 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
-      getAudio(lyrics, drakeVoiceID, setDissAudio);
+      getAudio(lyrics, drakeVoiceID, setDissAudio, "bbl drizzy");
     }
   }, [lyrics]);
 
@@ -62,7 +62,7 @@ export default function Roast() {
         <i
           className="text-5xl text-white cursor-pointer fa-house fa-solid"
           onClick={() => {
-            navigate("/home");
+            navigate("/");
           }}
         />
         {dissAudio && (
@@ -101,7 +101,9 @@ export default function Roast() {
 
       <p
         onClick={() => {
-          navigate("/feedback", { state: { pdfData: pdfData } });
+          navigate("/feedback", {
+            state: { resumeText: resumeText, pdfData: pdfData },
+          });
         }}
         className="right-10 bottom-10 absolute text-3xl text-white cursor-pointer"
       >
