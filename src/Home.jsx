@@ -6,6 +6,7 @@ import "./styles/main.css";
 export default function Home() {
   const navigate = useNavigate();
   const [file, setFile] = useState();
+  const [pdfData, setPdfData] = useState();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -18,7 +19,9 @@ export default function Home() {
       try {
         pdfToText(file)
           .then((text) => {
-            navigate("/roast", { state: { resumeText: text, pdf: file } });
+            navigate("/roast", {
+              state: { resumeText: text, pdfData: pdfData },
+            });
           })
 
           .catch((error) => console.error("Failed to extract text from pdf"));
@@ -29,7 +32,16 @@ export default function Home() {
   };
 
   const onFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setFile(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result.split(",")[1]; // Remove the metadata part
+        setPdfData(base64String);
+      };
+      reader.readAsDataURL(file); // This will read the file as a Base64 string
+    }
   };
 
   return (
@@ -69,7 +81,7 @@ export default function Home() {
             onClick={onFileSubmit}
             className="text-4xl w-[300px] h-[90px] border-2 border-gray-600 rounded-[4px] text-white text-[48px] hover:border-4 font-bold"
           >
-            Roast Me{" "}
+            Roast Me
             <i className="fa-solid fa-fire-flame-curved bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent"></i>
           </button>
         </div>

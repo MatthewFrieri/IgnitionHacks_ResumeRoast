@@ -1,8 +1,28 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Viewer } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+import { useState } from "react";
 
 export default function Feedback() {
-  const file = location.state?.pdf;
+  const location = useLocation();
   const navigate = useNavigate();
+  // const [pdfUrl, setPdfUrl] = useState();
+  const pdfData = location.state?.pdfData;
+  let pdfUrl = null;
+  if (pdfData) {
+    const pdfBlob = new Blob(
+      [
+        new Uint8Array(
+          atob(pdfData)
+            .split("")
+            .map((char) => char.charCodeAt(0))
+        ),
+      ],
+      { type: "application/pdf" }
+    );
+    // setPdfUrl(URL.createObjectURL(pdfBlob));
+    pdfUrl = URL.createObjectURL(pdfBlob);
+  }
 
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">

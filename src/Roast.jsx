@@ -2,13 +2,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
-import Crunker from "crunker";
 
 export default function Roast() {
   const location = useLocation();
   const navigate = useNavigate();
   const resumeText = location.state?.resumeText;
-  const file = location.state?.pdf;
+  const pdfData = location.state?.pdfData;
   const [lyrics, setLyrics] = useState("");
   const [dissAudio, setDissAudio] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -102,7 +101,7 @@ export default function Roast() {
 
       <p
         onClick={() => {
-          navigate("/feedback" , {state : {pdf : file}});
+          navigate("/feedback", { state: { pdfData: pdfData } });
         }}
         className="right-10 bottom-10 absolute text-3xl text-white cursor-pointer"
       >
