@@ -4,6 +4,7 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import { useState, useEffect } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
+import "./styles/main.css";
 
 export default function Feedback() {
   const location = useLocation();
@@ -13,6 +14,7 @@ export default function Feedback() {
   const kendrickVoiceID = "MOrJbx3jEEhp0z50jgLG";
 
   const [feedback, setFeedback] = useState("");
+  const [displayFeedback, setDisplayFeedback] = useState([]);
   const [script, setScript] = useState("");
   const [kendrickAudio, setKendrickAudio] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
@@ -35,7 +37,14 @@ export default function Feedback() {
   useEffect(() => {
     if (feedback) {
       console.log(feedback);
+      let dispFeedback = feedback.split("#");
+      dispFeedback.forEach(function (item, index) {
+        if (item === "") {
+          dispFeedback.splice(index, 1);
+        }
+      });
 
+      setDisplayFeedback(dispFeedback);
       const prompt = `You are Kendrick Lamar. I am going to give you a resume
       with some feedback on how to make it better. Write me a script talking as if
       you are Kendrick Lamar elaborating on each feedback point. Elaborate only a 
@@ -104,7 +113,16 @@ export default function Feedback() {
       <div className="left-10 absolute flex justify-center items-center border-4 border-gray-400 bg-gradient-to-t from-black to-gray-900 p-10 rounded-xl w-[38rem] h-[38rem]">
         {kendrickAudio ? (
           hasPlayedOnce ? (
-            <p>{feedback}</p>
+            <ul>
+              {displayFeedback.map((item, index) => (
+                <li
+                  className="-ml-3 pl-1 text-[19px] p-3 text-white"
+                  key={index}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
           ) : (
             <i
               onClick={playAudio}
