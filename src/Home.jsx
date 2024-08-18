@@ -75,7 +75,6 @@ export default function Home() {
             type="file"
             id="fileInput"
             onChange={onFileChange}
-            accept="application/pdf"
             className=""
           ></input>
           <button

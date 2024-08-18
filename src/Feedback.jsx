@@ -15,14 +15,17 @@ export default function Feedback() {
   const [feedback, setFeedback] = useState("");
   const [script, setScript] = useState("");
   const [kendrickAudio, setKendrickAudio] = useState();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
 
   useEffect(() => {
     if (resumeText !== undefined) {
       const prompt = `Look at my resume and provide some feedback that can
-      help improve it. Make sure none of your feedback points are about formatting.
+      help improve it. Make sure none of your feedback is about formatting.
       List out 5 feedback points that are one sentence each.
       IT IS IMPORTANT THAT THEY ARE SHORT FEEDBACK POINTS. 
       Format them like this: # feedback point one # feedback point two ...
+      IT IS CRUCIAL THAT YOU FOLLOW THE EXAMPLE FORMATTING.
       Resume: ${resumeText}`;
 
       promptGemini(prompt, setFeedback);
@@ -31,9 +34,14 @@ export default function Feedback() {
 
   useEffect(() => {
     if (feedback) {
+      console.log(feedback);
+
       const prompt = `You are Kendrick Lamar. I am going to give you a resume
       with some feedback on how to make it better. Write me a script talking as if
-      you are Kendrick Lamar elaborating on each feedback point. Feedback: ${feedback} 
+      you are Kendrick Lamar elaborating on each feedback point. Elaborate only a 
+      couple sentences per point but make sure you cover every point. Ensure your 
+      response only consists of plain text.
+      Feedback: ${feedback} 
       Resume: ${resumeText}`;
 
       promptGemini(prompt, setScript);
@@ -42,14 +50,24 @@ export default function Feedback() {
 
   useEffect(() => {
     if (script) {
+      console.log(script);
+
       getAudio(script, kendrickVoiceID, setKendrickAudio, "not like us");
     }
   }, [script]);
 
+  useEffect(() => {
+    if (kendrickAudio) {
+      kendrickAudio.addEventListener("ended", () => {
+        setIsPlaying(false);
+      });
+    }
+  }, [kendrickAudio]);
+
   const playAudio = () => {
     kendrickAudio.play();
-    // setHasPlayedOnce(true);
-    // setIsPlaying(true);
+    setHasPlayedOnce(true);
+    setIsPlaying(true);
   };
 
   let pdfUrl = null;
@@ -69,22 +87,44 @@ export default function Feedback() {
 
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
-        <div className="flex items-center w-[40vw]">
-          <i
-            className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 m-10 text-5xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-          <h1 className="bg-clip-text text-5xl text-nowrap text-white">Feedback with Kendrick</h1>
-        </div>
-      {/* <div className="right-0 z-10 absolute bg-red-500 w-10 h-screen" /> /}
-      {/ <div className="z-10 absolute bg-red-500 w-10 h-screen" /> */}
+      <span className="flex items-center w-[40vw]">
+        <i
+          className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 m-10 text-5xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+        <h1 className="bg-clip-text text-5xl text-nowrap text-white">
+          Feedback with Kendrick
+        </h1>
+      </span>
       <div className="right-28 bottom-1 absolute ml-10 w-[42rem]">
         {pdfUrl && <Viewer fileUrl={pdfUrl} />}
       </div>
-      <div className="left-10 absolute flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[38rem] h-[38rem]"></div>
-      <img src="kdot.png" className="-right-5 -bottom-3 absolute w-[25rem] -scale-x-100"></img>
+      <div className="left-10 absolute flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[38rem] h-[38rem]">
+        {kendrickAudio ? (
+          hasPlayedOnce ? (
+            <p>{feedback}</p>
+          ) : (
+            <i
+              onClick={playAudio}
+              className="text-8xl text-white cursor-pointer fa-play fa-solid"
+            ></i>
+          )
+        ) : (
+          <div className="border-4 border-t-transparent border-blue-500 border-solid rounded-full w-12 h-12 animate-spin b"></div>
+        )}
+        {!isPlaying && hasPlayedOnce && (
+          <i
+            onClick={playAudio}
+            className="fa-rotate-right right-8 bottom-8 absolute text-4xl text-white fa-solid"
+          ></i>
+        )}
+      </div>
+      <img
+        src="kdot.png"
+        className="-right-5 -bottom-3 absolute w-[25rem] -scale-x-100"
+      ></img>
     </div>
   );
 }
