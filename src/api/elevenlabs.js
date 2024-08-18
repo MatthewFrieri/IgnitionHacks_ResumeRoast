@@ -4,7 +4,7 @@ import Crunker from "crunker";
 export async function getAudio(text, voiceId, setDissAudio, setDownloadableOutput) {
   // const response = await axios.post(
   //   `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
-  //   { text: "e" },
+  //   { text: text },
   //   {
   //     headers: {
   //       "Content-Type": "application/json",
@@ -16,7 +16,7 @@ export async function getAudio(text, voiceId, setDissAudio, setDownloadableOutpu
   
   // const drakeAudio = new Audio(URL.createObjectURL(response.data));
   const drakeAudio = new Audio('DrakeRoast.mp3')
-  const bblDrizzy = new Audio('BBLDrizzy.mp3')
+  const bblDrizzy = new Audio('bblDrizzy.mp3')
 
   const finalAudio = await buildAudio(drakeAudio, bblDrizzy)
   setDissAudio(finalAudio)
