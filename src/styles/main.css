@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-yellow-light: rgb(255, 225, 136);
+}
+
 #fileInput {
     display: none;
 }
@@ -43,6 +47,6 @@
     
   }
   
-  .slide-in .sliding-image {
-    transform: translateY(0); /* Move the image to its final position */
-  }
+.slide-in .sliding-image {
+  transform: translateY(0); /* Move the image to its final position */
+}

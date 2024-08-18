@@ -94,8 +94,8 @@ export default function Feedback() {
             navigate("/");
           }}
         />
-        <h1 className="bg-clip-text text-5xl text-nowrap text-white">
-          Feedback with Kendrick
+        <h1 className="bg-clip-text font-bold text-5xl text-nowrap text-white">
+          Kendrick's Critique
         </h1>
       </span>
       <div className="right-28 bottom-1 absolute ml-10 w-[42rem]">
@@ -108,11 +108,11 @@ export default function Feedback() {
           ) : (
             <i
               onClick={playAudio}
-              className="text-8xl text-white cursor-pointer fa-play fa-solid"
+              className="pt-[200px] w-full h-full text-8xl text-center text-white cursor-pointer fa-play fa-solid"
             ></i>
           )
         ) : (
-          <div className="border-4 border-t-transparent border-blue-500 border-solid rounded-full w-12 h-12 animate-spin b"></div>
+          <div className="border-4 border-orange-500 border-t-transparent border-solid rounded-full w-12 h-12 animate-spin b"></div>
         )}
         {!isPlaying && hasPlayedOnce && (
           <i

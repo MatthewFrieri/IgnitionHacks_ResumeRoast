@@ -2,6 +2,9 @@ import axios from "axios";
 import Crunker from "crunker";
 
 export async function getAudio(text, voiceId, setFinalAudio, song) {
+
+  console.log('audio api call');
+  
   // const response = await axios.post(
   //   `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
   //   { text: text },

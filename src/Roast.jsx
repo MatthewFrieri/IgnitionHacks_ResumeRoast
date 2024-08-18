@@ -78,15 +78,18 @@ export default function Roast() {
           }}
         />
         {dissAudio && (
-          <div onClick={downloadAudio} className="flex justify-evenly items-center gap-4 text-white cursor-pointer">
-            <i
-              className="text-4xl text-white fa-download fa-solid"
-            />
+          <div
+            onClick={downloadAudio}
+            className="flex justify-evenly items-center gap-4 text-white cursor-pointer"
+          >
+            <i className="text-4xl text-white fa-download fa-solid" />
             <h1 className="text-white text-xl">Download Disstrack</h1>
           </div>
         )}
       </span>
-      <h1 className="relative top-10 left-52 text-5xl text-white">Placeholder</h1>
+      <h1 className="relative top-10 left-24 font-bold text-7xl text-white">
+        Drake's Disstrack
+      </h1>
       <img
         src="drakeRapping.png"
         className="-bottom-80 -left-96 absolute scale-50"
@@ -100,7 +103,9 @@ export default function Roast() {
                 {displayLyrics.map((block, index) => (
                   <div>
                     {block.map((verse, subIndex) => (
-                      <p className="-ml-3 pl-1 text-[19px] text-white">{verse}</p>
+                      <p className="-ml-3 pl-1 text-[19px] text-white">
+                        {verse}
+                      </p>
                     ))}
                     <br></br>
                   </div>
@@ -109,11 +114,11 @@ export default function Roast() {
             ) : (
               <i
                 onClick={playAudio}
-                className="justify-self-center text-8xl text-white fa-play fa-solid"
+                className="pt-[230px] w-full h-full text-8xl text-center text-white cursor-pointer fa-play fa-solid"
               ></i>
             )
           ) : (
-            <div className="border-4 border-t-transparent border-blue-500 border-solid rounded-full w-12 h-12 animate-spin b"></div>
+            <div className="border-4 border-orange-500 border-t-transparent border-solid rounded-full w-12 h-12 animate-spin b"></div>
           )}
           {!isPlaying && hasPlayedOnce && (
             <i
@@ -130,7 +135,7 @@ export default function Roast() {
             state: { resumeText: resumeText, pdfData: pdfData },
           });
         }}
-        className="right-10 bottom-10 absolute text-3xl text-white cursor-pointer"
+        className="right-24 bottom-10 absolute text-3xl text-white cursor-pointer"
       >
         Save my resume →
       </p>
