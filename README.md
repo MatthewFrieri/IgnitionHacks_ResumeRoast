@@ -28,5 +28,5 @@ Improving the synchronization of the Drake vocals with the backing beat. This me
 
 ## Team Members 🧑
 Matthew Frieri,
-Nicholas Karantakis,
-Nickrod Basiri
+Nickrod Basiri,
+Nicholas Karantakis
