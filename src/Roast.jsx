@@ -83,6 +83,11 @@ export default function Roast() {
             className="flex justify-evenly items-center gap-4 text-white cursor-pointer"
           >
             <i className="text-4xl text-white fa-download fa-solid" />
+          <div
+            onClick={downloadAudio}
+            className="flex justify-evenly items-center gap-4 text-white cursor-pointer"
+          >
+            <i className="text-4xl text-white fa-download fa-solid" />
             <h1 className="text-white text-xl">Download Disstrack</h1>
           </div>
         )}
@@ -101,9 +106,12 @@ export default function Roast() {
               <div>
                 <br></br>
                 {displayLyrics.map((block, index) => (
-                  <div>
+                  <div key={index}>
                     {block.map((verse, subIndex) => (
-                      <p className="-ml-3 pl-1 text-[19px] text-white">
+                      <p
+                        key={subIndex}
+                        className="-ml-3 pl-1 text-[19px] text-white"
+                      >
                         {verse}
                       </p>
                     ))}

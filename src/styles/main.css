@@ -50,3 +50,12 @@
 .slide-in .sliding-image {
   transform: translateY(0); /* Move the image to its final position */
 }
+
+  .slide-in .sliding-image {
+    transform: translateY(0); /* Move the image to its final position */
+  }
+
+  ul {
+    list-style-type: disc; /* Ensures bullet points are used */
+    padding-left: 20px; /* Adds indentation */
+  }

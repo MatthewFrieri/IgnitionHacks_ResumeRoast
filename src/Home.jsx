@@ -83,6 +83,7 @@ export default function Home() {
           <input
             type="file"
             id="fileInput"
+            accept="application/pdf"
             onChange={onFileChange}
             className=""
           ></input>
