@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
-import { getAudio } from "./api/elevenlabs";
+import { getAudio } from "./api/audio";
 
 export default function Roast() {
   const location = useLocation();
@@ -36,7 +36,6 @@ export default function Roast() {
         lyricsList.push(item.split("\n"));
       });
 
-      console.log(lyricsList);
       setDisplayLyrics(lyricsList);
 
       getAudio(lyrics, drakeVoiceID, setDissAudio, "bbl drizzy");
@@ -74,6 +73,11 @@ export default function Roast() {
         <i
           className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 text-4xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
           onClick={() => {
+            if (dissAudio && isPlaying) {
+              dissAudio.pause();
+              setIsPlaying(false);
+            }
+
             navigate("/");
           }}
         />
@@ -91,7 +95,7 @@ export default function Roast() {
         Drake's Disstrack
       </h1>
       <img
-        src="drakeRapping.png"
+        src="images/drakeRapping.png"
         className="-bottom-80 -left-96 absolute scale-50"
       />
       <div className="top-20 right-40 absolute">
@@ -126,7 +130,7 @@ export default function Roast() {
           {!isPlaying && hasPlayedOnce && (
             <i
               onClick={playAudio}
-              className="fa-rotate-right right-8 bottom-8 absolute p-2 text-4xl text-white fa-solid"
+              className="fa-rotate-right right-8 bottom-8 absolute p-2 text-4xl text-white cursor-pointer fa-solid"
             ></i>
           )}
         </div>
@@ -134,6 +138,11 @@ export default function Roast() {
 
       <p
         onClick={() => {
+          if (dissAudio && isPlaying) {
+            dissAudio.pause();
+            setIsPlaying(false);
+          }
+
           navigate("/feedback", {
             state: { resumeText: resumeText, pdfData: pdfData },
           });

@@ -10,7 +10,6 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger the animation when the component mounts
     setIsVisible(true);
   }, []);
 
@@ -37,25 +36,25 @@ export default function Home() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64String = reader.result.split(",")[1]; // Remove the metadata part
+        const base64String = reader.result.split(",")[1];
         setPdfData(base64String);
       };
-      reader.readAsDataURL(file); // This will read the file as a Base64 string
+      reader.readAsDataURL(file);
     }
   };
 
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
       <img
-        src="frontPageDrizzy.png"
+        src="images/frontPageDrizzy.png"
         className="absolute bottom-0 z-10 -right-10 w-[60rem]"
       ></img>
       <img
-        src="drizzyHand.png"
+        src="images/drizzyHand.png"
         className="absolute bottom-0 z-30 -right-10 w-[60rem]"
       ></img>
       <div className={`image-container ${isVisible ? "slide-in" : ""}`}>
-        <img src="microphone.png" className="sliding-image"></img>
+        <img src="images/microphone.png" className="sliding-image"></img>
       </div>
 
       <div

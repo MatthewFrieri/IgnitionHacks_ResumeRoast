@@ -3,7 +3,7 @@ import { Viewer } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { useState, useEffect } from "react";
 import { promptGemini } from "./api/gemini";
-import { getAudio } from "./api/elevenlabs";
+import { getAudio } from "./api/audio";
 import "./styles/main.css";
 
 export default function Feedback() {
@@ -25,6 +25,7 @@ export default function Feedback() {
       const prompt = `Look at my resume and provide some feedback that can
       help improve it. Make sure none of your feedback is about formatting.
       List out 5 feedback points that are one sentence each.
+      IT IS IMPORTANT THAT EACH FEEDBACK POINT IS ONE SENTENCE.
       IT IS IMPORTANT THAT THEY ARE SHORT FEEDBACK POINTS. 
       Format them like this: # feedback point one # feedback point two ...
       IT IS CRUCIAL THAT YOU FOLLOW THE EXAMPLE FORMATTING.
@@ -36,7 +37,6 @@ export default function Feedback() {
 
   useEffect(() => {
     if (feedback) {
-      console.log(feedback);
       let dispFeedback = feedback.split("#");
       dispFeedback.forEach(function (item, index) {
         if (item === "") {
@@ -59,8 +59,6 @@ export default function Feedback() {
 
   useEffect(() => {
     if (script) {
-      console.log(script);
-
       getAudio(script, kendrickVoiceID, setKendrickAudio, "not like us");
     }
   }, [script]);
@@ -100,10 +98,15 @@ export default function Feedback() {
         <i
           className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 m-10 text-4xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
           onClick={() => {
+            if (kendrickAudio && isPlaying) {
+              kendrickAudio.pause();
+              setIsPlaying(false);
+            }
+
             navigate("/");
           }}
         />
-        <h1 className="bg-clip-text font-bold text-5xl text-nowrap text-white">
+        <h1 className="bg-clip-text ml-6 font-bold text-5xl text-nowrap text-white">
           Kendrick's Critique
         </h1>
       </span>
@@ -116,7 +119,7 @@ export default function Feedback() {
             <ul>
               {displayFeedback.map((item, index) => (
                 <li
-                  className="-ml-3 pl-1 text-[19px] p-3 text-white"
+                  className="-ml-3 p-3 pl-1 text-[19px] text-white"
                   key={index}
                 >
                   {item}
@@ -135,12 +138,12 @@ export default function Feedback() {
         {!isPlaying && hasPlayedOnce && (
           <i
             onClick={playAudio}
-            className="fa-rotate-right right-8 bottom-8 absolute text-4xl text-white fa-solid"
+            className="fa-rotate-right right-8 bottom-8 absolute text-4xl text-white cursor-pointer fa-solid"
           ></i>
         )}
       </div>
       <img
-        src="kdot.png"
+        src="images/kdot.png"
         className="-right-5 -bottom-3 absolute w-[25rem] -scale-x-100"
       ></img>
     </div>
