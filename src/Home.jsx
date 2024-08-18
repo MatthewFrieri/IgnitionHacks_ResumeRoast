@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import pdfToText from "react-pdftotext";
+import "./styles/main.css";
 
 export default function Home() {
   const navigate = useNavigate();
   const [file, setFile] = useState();
   const [pdfData, setPdfData] = useState();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger the animation when the component mounts
+    setIsVisible(true);
+  }, []);
 
   const onFileSubmit = () => {
     if (file) {
@@ -43,6 +50,13 @@ export default function Home() {
         src="frontPageDrizzy.png"
         className="absolute bottom-0 z-10 -right-10 w-[60rem]"
       ></img>
+      <img
+        src="drizzyHand.png"
+        className="absolute bottom-0 z-30 -right-10 w-[60rem]"
+      ></img>
+      <div className={`image-container ${isVisible ? "slide-in" : ""}`}>
+        <img src="microphone.png" className="sliding-image"></img>
+      </div>
       <div className="absolute right-1 border-x-[400px] border-x-transparent border-yellow-100 border-b-[3000px] -rotate-[20deg]"></div>
       <div className="flex flex-col gap-8 top-[100px] left-[150px] z-10 absolute">
         <div>

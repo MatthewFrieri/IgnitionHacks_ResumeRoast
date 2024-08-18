@@ -25,12 +25,23 @@ export default function Feedback() {
   }
 
   return (
-    <div className="flex items-center bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen">
-      {/* <div className="right-0 z-10 absolute bg-red-500 w-10 h-screen" /> */}
-      {/* <div className="z-10 absolute bg-red-500 w-10 h-screen" /> */}
-      <div className="relative ml-10 w-[36rem] h-[44.5rem]">
-        {pdfUrl && <Viewer fileUrl={pdfUrl} />}
-      </div>
+    <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
+      <i
+          className="m-10 text-5xl text-white cursor-pointer fa-house fa-solid"
+          onClick={() => {
+            navigate("/");
+          }}
+        />
+      <p
+        onClick={() => {
+          navigate("/roast", {state : {pdf : file}});
+        }}
+        className="bottom-10 left-10 absolute text-3xl text-white cursor-pointer"
+      >
+        ← Back to Drake
+      </p>
+      <img src="kdot.png" className="right-10 -bottom-3 absolute w-[30rem]"></img>
     </div>
-  );
+    
+  )
 }

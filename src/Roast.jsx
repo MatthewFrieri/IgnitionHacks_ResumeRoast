@@ -62,7 +62,7 @@ export default function Roast() {
         <i
           className="text-5xl text-white cursor-pointer fa-house fa-solid"
           onClick={() => {
-            navigate("/");
+            navigate("/home");
           }}
         />
         {dissAudio && (
@@ -73,8 +73,8 @@ export default function Roast() {
         )}
       </span>
       <img
-        src="outlined-drake.png"
-        className="bottom-12 left-20 absolute scale-125"
+        src="drakeRapping.png"
+        className="-bottom-80 -left-96 absolute scale-50"
       />
       <div className="top-20 right-40 absolute">
         <div className="relative flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
