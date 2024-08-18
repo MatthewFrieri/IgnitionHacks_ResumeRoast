@@ -9,6 +9,7 @@ export default function Roast() {
   const resumeText = location.state?.resumeText;
   const pdfData = location.state?.pdfData;
   const [lyrics, setLyrics] = useState("");
+  const [displayLyrics, setDisplayLyrics] = useState([]);
   const [dissAudio, setDissAudio] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
@@ -27,7 +28,18 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
-      getAudio(lyrics, drakeVoiceID, setDissAudio, "bbl drizzy");
+      const dispLyrics = lyrics.split("\n\n");
+
+      var lyricsList = [];
+
+      dispLyrics.forEach(function (item, index) {
+        lyricsList.push(item.split("\n"));
+      });
+
+      console.log(lyricsList);
+      setDisplayLyrics(lyricsList);
+
+      getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
 
@@ -77,10 +89,20 @@ export default function Roast() {
         className="-bottom-80 -left-96 absolute scale-50"
       />
       <div className="top-20 right-40 absolute">
-        <div className="relative flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
+        <div className="relative flex items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
           {dissAudio ? (
             hasPlayedOnce ? (
-              <p className="font-roboto">{lyrics}</p>
+              <div>
+                <br></br>
+                {displayLyrics.map((block, index) => (
+                  <div>
+                    {block.map((verse, subIndex) => (
+                      <p>{verse}</p>
+                    ))}
+                    <br></br>
+                  </div>
+                ))}
+              </div>
             ) : (
               <i
                 onClick={playAudio}

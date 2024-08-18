@@ -4,7 +4,7 @@ import Crunker from "crunker";
 export async function getAudio(text, voiceId, setFinalAudio, song) {
   // const response = await axios.post(
   //   `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
-  //   { text: "e" },
+  //   { text: text },
   //   {
   //     headers: {
   //       "Content-Type": "application/json",
