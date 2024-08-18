@@ -80,10 +80,9 @@ export default function Home() {
           ></input>
           <button
             onClick={onFileSubmit}
-            className="text-4xl w-[300px] h-[90px] border-2 border-gray-600 rounded-[4px] text-white text-[48px] hover:border-4 font-bold"
+            className="text-4xl w-[300px] h-[90px] border-2 border-gray-600 rounded-[4px] text-white hover:border-4 font-bold"
           >
-            Roast Me
-            <i className="fa-solid fa-fire-flame-curved bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent"></i>
+            Roast Me <i className="fa-solid fa-fire-flame-curved bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent"></i>
           </button>
         </div>
       </div>

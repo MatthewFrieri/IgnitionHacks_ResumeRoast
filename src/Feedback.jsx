@@ -71,7 +71,7 @@ export default function Feedback() {
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
         <div className="flex items-center w-[40vw]">
           <i
-            className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 m-10 text-5xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
+            className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 m-10 text-4xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
             onClick={() => {
               navigate("/");
             }}
@@ -83,7 +83,7 @@ export default function Feedback() {
       <div className="right-28 bottom-1 absolute ml-10 w-[42rem]">
         {pdfUrl && <Viewer fileUrl={pdfUrl} />}
       </div>
-      <div className="left-10 absolute flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[38rem] h-[38rem]"></div>
+      <div className="left-10 absolute flex justify-center items-center border-4 border-gray-400 bg-gradient-to-t from-black to-gray-900 p-10 rounded-xl w-[38rem] h-[38rem]"></div>
       <img src="kdot.png" className="-right-5 -bottom-3 absolute w-[25rem] -scale-x-100"></img>
     </div>
   );
