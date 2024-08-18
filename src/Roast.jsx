@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
+import Verse from "./verse";
 
 export default function Roast() {
   const location = useLocation();
@@ -9,6 +10,7 @@ export default function Roast() {
   const resumeText = location.state?.resumeText;
   const pdfData = location.state?.pdfData;
   const [lyrics, setLyrics] = useState("");
+  const [displayLyrics, setDisplayLyrics] = useState([]);
   const [dissAudio, setDissAudio] = useState();
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
@@ -19,7 +21,7 @@ export default function Roast() {
       const prompt = `I want you to write a diss track for my resume as Drake. 
         Make it clear Drake is dissing my resume. Targetting specific pieces of 
         information from it (or information missing). Dont comment on any bad formatting 
-        or random characters. Write 4 verses of 4 lines each. ${resumeText}`;
+        or random characters. Write 4 verses of 4 lines. ${resumeText}`;
 
       promptGemini(prompt, setLyrics);
     }
@@ -27,6 +29,17 @@ export default function Roast() {
 
   useEffect(() => {
     if (lyrics) {
+      const dispLyrics = lyrics.split("\n\n");
+
+      var lyricsList = [];
+
+      dispLyrics.forEach(function (item, index) {
+        lyricsList.push(item.split("\n"));
+      });
+
+      console.log(lyricsList);
+      setDisplayLyrics(lyricsList);
+
       getAudio(lyrics, drakeVoiceID, setDissAudio);
     }
   }, [lyrics]);
@@ -77,10 +90,20 @@ export default function Roast() {
         className="-bottom-80 -left-96 absolute scale-50"
       />
       <div className="top-20 right-40 absolute">
-        <div className="relative flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
+        <div className="relative flex items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[40rem] h-[30rem]">
           {dissAudio ? (
             hasPlayedOnce ? (
-              <p className="font-roboto">{lyrics}</p>
+              <div>
+                <br></br>
+                {displayLyrics.map((block, index) => (
+                  <div>
+                    {block.map((verse, subIndex) => (
+                      <p>{verse}</p>
+                    ))}
+                    <br></br>
+                  </div>
+                ))}
+              </div>
             ) : (
               <i
                 onClick={playAudio}
