@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import pdfToText from "react-pdftotext";
+import "./styles/main.css";
 
 export default function Home() {
   const navigate = useNavigate();
   const [file, setFile] = useState();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger the animation when the component mounts
+    setIsVisible(true);
+  }, []);
 
   const onFileSubmit = () => {
     if (file) {
@@ -27,7 +34,17 @@ export default function Home() {
 
   return (
     <div className="relative flex flex-col justify-center items-center bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
-      <img src="frontPageDrizzy.png" className="absolute bottom-0 z-10 -right-10 w-[60rem]"></img>
+      <img
+        src="frontPageDrizzy.png"
+        className="absolute bottom-0 z-10 -right-10 w-[60rem]"
+      ></img>
+      <img
+        src="drizzyHand.png"
+        className="absolute bottom-0 z-30 -right-10 w-[60rem]"
+      ></img>
+      <div className={`image-container ${isVisible ? "slide-in" : ""}`}>
+        <img src="microphone.png" className="sliding-image"></img>
+      </div>
       <div className="absolute right-1 border-x-[400px] border-x-transparent border-yellow-100 border-b-[3000px] -rotate-[20deg]"></div>
       <div className="flex flex-col gap-8 top-[100px] left-[150px] z-10 absolute">
         <div>
@@ -48,8 +65,12 @@ export default function Home() {
             onChange={onFileChange}
             className=""
           ></input>
-          <button onClick={onFileSubmit} className="text-4xl w-[300px] h-[90px] border-2 border-gray-600 rounded-[4px] text-white text-[48px] hover:border-4 font-bold">
-            Roast Me <i className="fa-solid fa-fire-flame-curved bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent"></i>
+          <button
+            onClick={onFileSubmit}
+            className="text-4xl w-[300px] h-[90px] border-2 border-gray-600 rounded-[4px] text-white text-[48px] hover:border-4 font-bold"
+          >
+            Roast Me{" "}
+            <i className="fa-solid fa-fire-flame-curved bg-gradient-to-b from-orange-400 to-red-800 [-webkit-background-clip: text] bg-clip-text text-transparent"></i>
           </button>
         </div>
       </div>
