@@ -14,8 +14,8 @@ export async function getAudio(text, voiceId, setDissAudio, setDownloadableOutpu
   //   }
   // );
   
-  const drakeAudio = new Audio(URL.createObjectURL(response.data));
-  // const drakeAudio = new Audio('DrakeRoast.mp3')
+  // const drakeAudio = new Audio(URL.createObjectURL(response.data));
+  const drakeAudio = new Audio('DrakeRoast.mp3')
   const bblDrizzy = new Audio('BBLDrizzy.mp3')
 
   const finalAudio = await buildAudio(drakeAudio, bblDrizzy)
