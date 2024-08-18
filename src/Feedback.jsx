@@ -69,29 +69,22 @@ export default function Feedback() {
 
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
-      {kendrickAudio && (
-        <button
-          onClick={playAudio}
-          className="bg-green-400 rounded-full w-10 h-10"
-        >
-          PLAY
-        </button>
-      )}
-      {/* <div className="right-0 z-10 absolute bg-red-500 w-10 h-screen" /> */}
-      {/* <div className="z-10 absolute bg-red-500 w-10 h-screen" /> */}
-      <div className="relative ml-10 w-[36rem] h-[44.5rem]">
+        <div className="flex items-center w-[40vw]">
+          <i
+            className="bg-clip-text bg-gradient-to-b from-orange-400 to-red-800 m-10 text-5xl text-transparent cursor-pointer fa-house fa-solid [-webkit-background-clip: text]"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+          <h1 className="bg-clip-text text-5xl text-nowrap text-white">Feedback with Kendrick</h1>
+        </div>
+      {/* <div className="right-0 z-10 absolute bg-red-500 w-10 h-screen" /> /}
+      {/ <div className="z-10 absolute bg-red-500 w-10 h-screen" /> */}
+      <div className="right-28 bottom-1 absolute ml-10 w-[42rem]">
         {pdfUrl && <Viewer fileUrl={pdfUrl} />}
       </div>
-      <i
-        className="m-10 text-5xl text-white cursor-pointer fa-house fa-solid"
-        onClick={() => {
-          navigate("/");
-        }}
-      />
-      <img
-        src="kdot.png"
-        className="right-10 -bottom-3 absolute w-[30rem]"
-      ></img>
+      <div className="left-10 absolute flex justify-center items-center border-4 border-white bg-zinc-400 p-10 rounded-xl w-[38rem] h-[38rem]"></div>
+      <img src="kdot.png" className="-right-5 -bottom-3 absolute w-[25rem] -scale-x-100"></img>
     </div>
   );
 }
