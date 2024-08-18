@@ -21,8 +21,13 @@ export async function getAudio(text, voiceId, setFinalAudio, song) {
   if (song === 'bbl drizzy') {
     backgroundSong = new Audio('BBLDrizzy.mp3')
   } else if (song === 'not like us') {
-    backgroundSong = new Audio('NotLikeUs.mp3')
+    backgroundSong = new Audio('notLikeUs.mp3')
   }
+
+  console.log('background song');
+  console.log(backgroundSong);
+  
+  
 
   const finalAudio = await buildAudio(rapperAudio, backgroundSong)
   setFinalAudio(finalAudio)

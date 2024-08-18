@@ -39,7 +39,7 @@ export default function Roast() {
       console.log(lyricsList);
       setDisplayLyrics(lyricsList);
 
-      getAudio(lyrics, drakeVoiceID, setDissAudio);
+      getAudio(lyrics, drakeVoiceID, setDissAudio, "bbl drizzy");
     }
   }, [lyrics]);
 

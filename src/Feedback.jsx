@@ -69,12 +69,16 @@ export default function Feedback() {
 
   return (
     <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 w-screen h-screen overflow-hidden">
+      {kendrickAudio && (
+        <button
+          onClick={playAudio}
+          className="bg-green-400 rounded-full w-10 h-10"
+        >
+          PLAY
+        </button>
+      )}
       {/* <div className="right-0 z-10 absolute bg-red-500 w-10 h-screen" /> */}
       {/* <div className="z-10 absolute bg-red-500 w-10 h-screen" /> */}
-      <p className="text-white">{feedback}</p>
-      <br />
-      <p className="text-white">{script}</p>
-
       <div className="relative ml-10 w-[36rem] h-[44.5rem]">
         {pdfUrl && <Viewer fileUrl={pdfUrl} />}
       </div>
