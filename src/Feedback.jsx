@@ -32,14 +32,6 @@ export default function Feedback() {
             navigate("/");
           }}
         />
-      <p
-        onClick={() => {
-          navigate("/roast", {state : {pdf : file}});
-        }}
-        className="bottom-10 left-10 absolute text-3xl text-white cursor-pointer"
-      >
-        ← Back to Drake
-      </p>
       <img src="kdot.png" className="right-10 -bottom-3 absolute w-[30rem]"></img>
     </div>
     
