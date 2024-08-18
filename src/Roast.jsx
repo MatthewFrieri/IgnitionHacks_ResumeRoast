@@ -149,7 +149,7 @@ export default function Roast() {
         }}
         className="right-24 bottom-10 absolute text-3xl text-white cursor-pointer"
       >
-        Save my resume →
+        Fix my resume →
       </p>
     </div>
   );
