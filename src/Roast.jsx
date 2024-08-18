@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { promptGemini } from "./api/gemini";
 import { getAudio } from "./api/elevenlabs";
-import Verse from "./verse";
 
 export default function Roast() {
   const location = useLocation();
