@@ -15,12 +15,15 @@ export async function getAudio(text, voiceId, setFinalAudio, song) {
   // );
   
   // const rapperAudio = new Audio(URL.createObjectURL(response.data));
-  const rapperAudio = new Audio('DrakeRoast.mp3')
+  
 
   let backgroundSong = null
+  let rapperAudio = null
   if (song === 'bbl drizzy') {
+    rapperAudio = new Audio('DrakeRoast.mp3')
     backgroundSong = new Audio('BBLDrizzy.mp3')
   } else if (song === 'not like us') {
+    rapperAudio = new Audio('kendrickAdvice.mp3')
     backgroundSong = new Audio('notLikeUs.mp3')
   }
 
@@ -29,7 +32,7 @@ export async function getAudio(text, voiceId, setFinalAudio, song) {
   
   
 
-  const finalAudio = await buildAudio(rapperAudio, backgroundSong)
+  const finalAudio = await buildAudio(rapperAudio, backgroundSong, song)
   setFinalAudio(finalAudio)
 }
 
@@ -49,14 +52,21 @@ async function audioElementToAudioBuffer(audioElement) {
 }
 
 
-async function buildAudio(voice, track) {
+async function buildAudio(voice, track, song) {
 
+  let delay = 0;
+  if (song === 'bbl drizzy') {
+    delay = 6.3;
+  } else if (song === 'not like us') {
+    delay= 4.9;
+  }
+  
   const voiceAudio = await audioElementToAudioBuffer(voice);
   const trackBuffer = await audioElementToAudioBuffer(track);
-
+  
   const crunker = new Crunker({ sampleRate: voiceAudio.sampleRate });
 
-  const voiceBuffer = crunker.padAudio(voiceAudio, 0, 6.3);
+  const voiceBuffer = crunker.padAudio(voiceAudio, 0, delay);
   const merged = crunker.mergeAudio([trackBuffer, voiceBuffer]);
   const cut = crunker.sliceAudio(
     merged,
