@@ -1,5 +1,7 @@
 # Resume Roast
 
+<img width="1470" alt="frontPage" src="https://github.com/user-attachments/assets/d49a16e7-1d40-4963-9aad-529c83012e1d">
+
 ## Inspiration 💡
 As Canadians, the Drake and Kendrick beef hit us hard. But not as hard as the current job market. Working on resumes has gotten so draining that it inspired us to come up with a fun and engaging alternative. Our project aims to bring some life back into the job seeking community.
 
